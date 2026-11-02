@@ -32,13 +32,14 @@ export default function NavLinks() {
           <Link
             key={link.name}
             href={link.href}
-            className={`flex h-[48px] grow items-center justify-center gap-2 rounded-md  p-3 text-sm font-medium hover:bg-sky-100 hover:text-blue-600 md:flex-none md:justify-start md:p-2 md:px-3 ${
+            aria-current={pathName === link.href ? "page" : undefined}
+            className={`flex h-[48px] grow focus-visible:outline focus-visible:outline-2 focus-visible:outline-blue-600 items-center justify-center gap-2 rounded-md  p-3 text-sm font-medium hover:bg-sky-100 hover:text-blue-600 md:flex-none md:justify-start md:p-2 md:px-3 ${
               pathName === link.href
                 ? "bg-blue-300 text-blue-600"
                 : "bg-gray-50"
             }`}>
-            <LinkIcon className="w-6" />
-            <p className="hidden md:block">{link.name}</p>
+            <LinkIcon className="w-6" aria-hidden="true" />
+            <span className="sr-only md:not-sr-only">{link.name}</span>
           </Link>
         );
       })}
