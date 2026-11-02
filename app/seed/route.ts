@@ -102,6 +102,15 @@ async function seedRevenue() {
 }
 
 export async function GET() {
+  // Public GET that writes to the database: only allow it outside production,
+  // or when ALLOW_SEED=true is set on purpose (for example, for the first seed).
+  if (process.env.NODE_ENV === 'production' && process.env.ALLOW_SEED !== 'true') {
+    return Response.json(
+      { error: 'Seeding is disabled. Set ALLOW_SEED=true to enable it.' },
+      { status: 403 },
+    );
+  }
+
   try {
     const result = await sql.begin((sql) => [
       seedUsers(),
